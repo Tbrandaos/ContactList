@@ -101,7 +101,7 @@ namespace ContactList.Controllers
         }
 
         [HttpGet("name/{name}")]
-        public async Task<IActionResult> GetByTema(string name)
+        public async Task<IActionResult> GetByName(string name)
         {
             try
             {
