@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Person } from "../models/Person";
 
-interface PersonProps {
+export interface PersonProps {
   person: Person;
 };
 
