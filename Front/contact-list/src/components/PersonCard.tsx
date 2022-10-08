@@ -1,5 +1,4 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,9 +9,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Person } from "../models/Person";
 import { Link } from "react-router-dom";
+import { deletePersonData } from "../api/PersonService";
 
 export interface PersonProps {
   person: Person;
+  onPersonRemoved: (() => void);
 }
 
 function stringToColor(string: string) {
@@ -55,6 +56,12 @@ function stringAvatar(name: string) {
 const PersonCard = (props: PersonProps): JSX.Element => {
   const { id, name, address, birthDate } = props.person;
 
+  const deletePerson = async (id: number): Promise<Number> => {
+    const deletedId = (await deletePersonData(id)).data;
+    props.onPersonRemoved();
+    return deletedId;
+  };
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -70,7 +77,7 @@ const PersonCard = (props: PersonProps): JSX.Element => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="outlined" startIcon={<DeleteIcon />}>
+        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deletePerson(id)}>
           Delete
         </Button>
         <Link to={`/edit/${id}`}>

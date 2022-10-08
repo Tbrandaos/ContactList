@@ -10,4 +10,8 @@ const getPersonData = (id: number): Promise<AxiosResponse<Person>> => (
     axios.get<Person>(`https://localhost:7145/api/Person/${id}`)
 );
 
-export { getPersonListData, getPersonData };
+const deletePersonData = (id: number): Promise<AxiosResponse<number>> => (
+    axios.delete<number>(`https://localhost:7145/api/Person/${id}`)
+);
+export { 
+    getPersonListData, getPersonData, deletePersonData };

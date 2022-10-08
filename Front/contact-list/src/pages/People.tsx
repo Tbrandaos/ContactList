@@ -12,8 +12,13 @@ const peopleData = async (): Promise<Person[]> => {
 
 function People() {
   const [people, setPeople] = useState<Person[]>([]);
-  useEffect(() => {
+
+  function fetchPeople() {
     peopleData().then((people) => setPeople(people));
+  }
+
+  useEffect(() => {
+    fetchPeople();
   }, []);
 
   return (
@@ -21,7 +26,11 @@ function People() {
       <MainAppBar title="Contacts" />
       <Container>
         {people.map((person) => (
-          <PersonCard key={person.id} person={person}></PersonCard>
+          <PersonCard
+            key={person.id}
+            onPersonRemoved={() => {fetchPeople()}}
+            person={person}
+          ></PersonCard>
         ))}
       </Container>
     </div>

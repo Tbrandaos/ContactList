@@ -1,5 +1,13 @@
 import { AccountCircle } from "@mui/icons-material";
-import { AppBar, Box, TextField, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Link,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -8,6 +16,8 @@ import { Person } from "../models/Person";
 import { getPersonData } from "../api/PersonService";
 import { useParams } from "react-router-dom";
 import MainAppBar from "../components/MainAppBar";
+import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const personData = async (id: number): Promise<Person> => {
   const person = (await getPersonData(id)).data;
@@ -16,6 +26,7 @@ const personData = async (id: number): Promise<Person> => {
 
 const UpsertPerson = (): JSX.Element => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const [person, setPerson] = useState<Person>(new Person());
   useEffect(() => {
@@ -61,6 +72,11 @@ const UpsertPerson = (): JSX.Element => {
           renderInput={(params) => <TextField {...params} />}
         />
       </LocalizationProvider>
+      <Button variant="contained" endIcon={<ArrowBackIcon />} onClick={() => {
+        navigate("/")
+      }}>
+        Back
+      </Button>
     </div>
   );
 };
