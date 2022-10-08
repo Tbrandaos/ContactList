@@ -1,10 +1,18 @@
+import { AppBar, Container, Toolbar, Typography } from '@mui/material';
 import React from 'react';
-import PersonTable from './pages/PersonTable';
+import People from './pages/People';
 
 function App() {
   return (
     <div className="App">
-      <PersonTable></PersonTable>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit" component="div">
+            Photos
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <People></People>
     </div>
   );
 }
