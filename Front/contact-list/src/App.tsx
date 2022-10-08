@@ -1,18 +1,23 @@
-import { AppBar, Toolbar, Typography } from '@mui/material';
-import React from 'react';
-import People from './pages/People';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import People from "./pages/People";
+import MainAppBar from "./components/MainAppBar";
+import UpsertPerson from "./pages/UpsertPerson";
 
 function App() {
   return (
     <div className="App">
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit" component="div">
-            Photos
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <People></People>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<People />} />
+          <Route path="/edit">
+            <Route
+              path=":personId"
+              element={<UpsertPerson />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

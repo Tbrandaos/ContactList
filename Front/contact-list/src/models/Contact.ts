@@ -1,6 +1,6 @@
-export interface Contact {
-    id: number
-    name: string
-    value: string
-    personId: number
+export class Contact {
+    id: number = 0
+    name: string = ''
+    value: string = ''
+    personId: number = 0
   }

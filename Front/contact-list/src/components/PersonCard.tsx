@@ -9,15 +9,15 @@ import { Avatar } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Person } from "../models/Person";
+import { Link } from "react-router-dom";
 
 export interface PersonProps {
   person: Person;
-};
+}
 
 function stringToColor(string: string) {
   let hash = 0;
   let i;
-  console.log(string)
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
@@ -28,14 +28,14 @@ function stringToColor(string: string) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
-  
+
   return color;
 }
 
 function stringAvatar(name: string) {
   const names = name.split(" ");
 
-  if(names.length === 1){
+  if (names.length === 1) {
     return {
       sx: {
         bgcolor: stringToColor(name),
@@ -53,12 +53,8 @@ function stringAvatar(name: string) {
 }
 
 const PersonCard = (props: PersonProps): JSX.Element => {
-  const{
-    name, 
-    address,
-    birthDate,
-  } = props.person;
-  
+  const { id, name, address, birthDate } = props.person;
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -70,19 +66,21 @@ const PersonCard = (props: PersonProps): JSX.Element => {
           {address}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {birthDate}
+          {birthDate.toString()}
         </Typography>
       </CardContent>
       <CardActions>
         <Button variant="outlined" startIcon={<DeleteIcon />}>
           Delete
         </Button>
-        <Button variant="contained" endIcon={<EditIcon />}>
-          Send
-        </Button>
+        <Link to={`/edit/${id}`}>
+          <Button variant="contained" endIcon={<EditIcon />}>
+            Edit
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
-}
+};
 
 export default PersonCard;
