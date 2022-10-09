@@ -11,7 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 import { Person } from "../models/Person";
-import { getPersonData, postContactData, putContactData, putPersonData } from "../api/PersonService";
+import { getPersonData, postContactData, postPersonData, putContactData, putPersonData } from "../api/PersonService";
 import { useParams } from "react-router-dom";
 import MainAppBar from "../components/MainAppBar";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,11 @@ const personData = async (id: number): Promise<Person> => {
 
 const updatePerson = async (person: Person): Promise<Person> => {
   const result = (await putPersonData(person)).data;
+  return result;
+};
+
+const postPerson = async (person: Person): Promise<Person> => {
+  const result = (await postPersonData(person)).data;
   return result;
 };
 
@@ -99,8 +104,12 @@ const UpsertPerson = (): JSX.Element => {
         }}>
           Back
         </Button>
-        <Button variant="contained" endIcon={<SendIcon />} onClick={() => {
-          updatePerson(person);
+        <Button variant="contained" endIcon={<SendIcon />} onClick={async () => {
+          if (person.id === 0) {
+            await postPerson(person);
+          } else {
+            await updatePerson(person);
+          }
           contacts.forEach(async (contact) => {
             console.log(contact);
             if (contact.hasBeenSaved()) {

@@ -19,6 +19,10 @@ const putPersonData = (person: Person): Promise<AxiosResponse<Person>> => (
     axios.put<Person>(`https://localhost:7145/api/Person/${person.id}`, person)
 );
 
+const postPersonData = (person: Person): Promise<AxiosResponse<Person>> => (
+    axios.post<Person>('https://localhost:7145/api/Person/', person)
+);
+
 const postContactData = (contact: Contact): Promise<AxiosResponse<Contact>> => (
     axios.post<Contact>(`https://localhost:7145/api/Contact/${contact.personId}`, contact)
 );
@@ -33,5 +37,6 @@ export {
     deletePersonData,
     putPersonData,
     putContactData,
-    postContactData
+    postContactData,
+    postPersonData
  };
