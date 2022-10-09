@@ -1,4 +1,5 @@
-﻿using ContactList.Domain.Models;
+﻿using ContactList.Domain.Enums;
+using ContactList.Domain.Models;
 using ContactList.Domain.Service;
 using ContactList.Infra.Context;
 using ContactList.Infra.Entities;
@@ -29,9 +30,9 @@ namespace ContactList.Test
 
             var contacts = new[]
             {
-                new Contact { Name="Email", Value = "xxx@gmail.com"},
-                new Contact { Name="Whatsapp", Value = "(99) 99999-9999"},
-                new Contact { Name="Linkedin", Value = "xxx/Linkedin.com"},
+                new Contact { Name="Email", Value = "xxx@gmail.com", ContactType = ContactType.Email},
+                new Contact { Name="Whatsapp", Value = "(99) 99999-9999", ContactType = ContactType.Phone},
+                new Contact { Name="Linkedin", Value = "xxx/Linkedin.com", ContactType = ContactType.Link},
             };
 
             _context.Contacts.AddRange(contacts);
@@ -61,6 +62,7 @@ namespace ContactList.Test
             Xunit.Assert.NotNull(contact);
             Xunit.Assert.Equal("Email", contact.Name);
             Xunit.Assert.Equal("xxx@gmail.com", contact.Value);
+            Xunit.Assert.Equal(ContactType.Email, contact.ContactType);
 
             Dispose();
         }
@@ -88,10 +90,12 @@ namespace ContactList.Test
             {
                 Name = "Phone",
                 Value = "2222-2222",
+                ContactType = 0
             });
 
             Xunit.Assert.Equal("Phone", contact.Name);
             Xunit.Assert.Equal("2222-2222", contact.Value);
+            Xunit.Assert.Equal(ContactType.Phone, contact.ContactType);
 
             Dispose();
         }
@@ -109,6 +113,7 @@ namespace ContactList.Test
                     Id = 4,
                     Name = "Phone",
                     Value = "2222-2222",
+                    ContactType = 0,
                 }
             ))
             .Should()
@@ -127,10 +132,12 @@ namespace ContactList.Test
                 Id = 3,
                 Name = "Linkedin Update",
                 Value = "xxxyyy/Linkedin.com",
+                ContactType = ContactType.Email,
             });
 
             Xunit.Assert.Equal("Linkedin Update", contact.Name);
             Xunit.Assert.Equal("xxxyyy/Linkedin.com", contact.Value);
+            Xunit.Assert.Equal(ContactType.Email, contact.ContactType);
 
             Dispose();
         }

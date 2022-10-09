@@ -27,7 +27,8 @@ namespace ContactList.Infra.Service
                 {
                     Name = request.Name,
                     Value = request.Value,
-                    PersonId = request.PersonId
+                    ContactType = request.ContactType,
+                    PersonId = request.PersonId,
                 };
 
                 _context.Contacts.Add(entity);
@@ -52,6 +53,7 @@ namespace ContactList.Infra.Service
 
                 contact.Name = request.Name;
                 contact.Value = request.Value;
+                contact.ContactType = request.ContactType;
 
                 await _context.SaveChangesAsync();
 
@@ -82,6 +84,7 @@ namespace ContactList.Infra.Service
                         Id = item.Id,
                         Name = item.Name,
                         Value = item.Value,
+                        ContactType = item.ContactType,
                         PersonId = item.PersonId
                     });
                 }
@@ -112,6 +115,7 @@ namespace ContactList.Infra.Service
                     Id = contact.Id,
                     Name = contact.Name,
                     Value = contact.Value,
+                    ContactType = contact.ContactType,
                     PersonId = contact.PersonId
                 };
             }

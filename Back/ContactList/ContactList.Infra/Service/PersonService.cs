@@ -37,7 +37,8 @@ namespace ContactList.Infra.Service
                         entity.Contacts.Add(new Contact()
                         {
                             Name = item.Name,
-                            Value = item.Value
+                            Value = item.Value,
+                            ContactType = item.ContactType
                         });
                     }
                 }
@@ -97,20 +98,6 @@ namespace ContactList.Infra.Service
                         BirthDate = item.BirthDate
                     };
 
-                    if (item.Contacts != null)
-                    {
-                        foreach (var contact in item.Contacts)
-                        {
-                            response.Contacts.Add(new ContactDto()
-                            {
-                                Id = contact.Id,
-                                Name = contact.Name,
-                                Value = contact.Value,
-                                PersonId = contact.PersonId
-                            });
-                        }
-                    }
-
                     result.Add(response);
                 }
 
@@ -136,7 +123,7 @@ namespace ContactList.Infra.Service
                 if (person == null)
                     throw new Exception("Person not found for Id: " + id);
 
-                var response =  new PersonDto()
+                var response = new PersonDto()
                 {
                     Id = person.Id,
                     Name = person.Name,
@@ -153,6 +140,7 @@ namespace ContactList.Infra.Service
                             Id = item.Id,
                             Name = item.Name,
                             Value = item.Value,
+                            ContactType = item.ContactType,
                             PersonId = item.PersonId
                         });
                     }
