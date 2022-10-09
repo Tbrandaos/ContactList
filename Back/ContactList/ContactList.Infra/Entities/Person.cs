@@ -5,6 +5,10 @@ namespace ContactList.Infra.Entities
 {
     public class Person
     {
+        public Person()
+        {
+            Contacts = new List<Contact>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

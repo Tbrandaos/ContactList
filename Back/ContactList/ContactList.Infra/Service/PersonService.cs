@@ -30,6 +30,18 @@ namespace ContactList.Infra.Service
                     BirthDate = request.BirthDate
                 };
 
+                if (request.Contacts != null)
+                {
+                    foreach (var item in request.Contacts)
+                    {
+                        entity.Contacts.Add(new Contact()
+                        {
+                            Name = item.Name,
+                            Value = item.Value
+                        });
+                    }
+                }
+
                 _context.Persons.Add(entity);
 
                 var result = await _context.SaveChangesAsync();
@@ -67,7 +79,9 @@ namespace ContactList.Infra.Service
         {
             try
             {
-                IQueryable<Person> query = _context.Persons.OrderBy(a => a.Id);
+                IQueryable<Person> query = _context.Persons
+                    .Include(a => a.Contacts)
+                    .OrderBy(a => a.Id);
 
                 var persons = await query.ToListAsync();
 
@@ -75,13 +89,29 @@ namespace ContactList.Infra.Service
 
                 foreach (var item in persons)
                 {
-                    result.Add(new PersonDto()
+                    var response = new PersonDto()
                     {
                         Id = item.Id,
                         Name = item.Name,
                         Address = item.Address,
                         BirthDate = item.BirthDate
-                    });
+                    };
+
+                    if (item.Contacts != null)
+                    {
+                        foreach (var contact in item.Contacts)
+                        {
+                            response.Contacts.Add(new ContactDto()
+                            {
+                                Id = contact.Id,
+                                Name = contact.Name,
+                                Value = contact.Value,
+                                PersonId = contact.PersonId
+                            });
+                        }
+                    }
+
+                    result.Add(response);
                 }
 
                 return result;
@@ -97,6 +127,7 @@ namespace ContactList.Infra.Service
             try
             {
                 IQueryable<Person> query = _context.Persons
+                    .Include(a => a.Contacts)
                     .OrderBy(a => a.Id)
                     .Where(a => a.Id == id);
 
@@ -105,13 +136,29 @@ namespace ContactList.Infra.Service
                 if (person == null)
                     throw new Exception("Person not found for Id: " + id);
 
-                return new PersonDto()
+                var response =  new PersonDto()
                 {
                     Id = person.Id,
                     Name = person.Name,
                     Address = person.Address,
-                    BirthDate = person.BirthDate
+                    BirthDate = person.BirthDate,
                 };
+
+                if (person.Contacts != null)
+                {
+                    foreach (var item in person.Contacts)
+                    {
+                        response.Contacts.Add(new ContactDto()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Value = item.Value,
+                            PersonId = item.PersonId
+                        });
+                    }
+                }
+
+                return response;
             }
             catch (Exception ex)
             {
