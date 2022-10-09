@@ -13,15 +13,21 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React, { useEffect, useState } from "react";
 import { Person } from "../models/Person";
-import { getPersonData } from "../api/PersonService";
+import { getPersonData, putPersonData } from "../api/PersonService";
 import { useParams } from "react-router-dom";
 import MainAppBar from "../components/MainAppBar";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SendIcon from "@mui/icons-material/Send";
 
 const personData = async (id: number): Promise<Person> => {
   const person = (await getPersonData(id)).data;
   return person;
+};
+
+const updatePerson = async (person: Person): Promise<Person> => {
+  const result = (await putPersonData(person)).data;
+  return result;
 };
 
 const UpsertPerson = (): JSX.Element => {
@@ -73,9 +79,15 @@ const UpsertPerson = (): JSX.Element => {
         />
       </LocalizationProvider>
       <Button variant="contained" endIcon={<ArrowBackIcon />} onClick={() => {
-        navigate("/")
+        navigate("/");
       }}>
         Back
+      </Button>
+      <Button variant="contained" endIcon={<SendIcon />} onClick={() => {
+        updatePerson(person);
+        navigate("/");
+      }}>
+        Send
       </Button>
     </div>
   );

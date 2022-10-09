@@ -32,8 +32,7 @@ namespace ContactList.Infra.Service
 
                 _context.Contacts.Add(entity);
 
-                var result = await _context.SaveChangesAsync();
-                if (result == 0) throw new Exception("Error on Contact Insert");
+                await _context.SaveChangesAsync();
 
                 request.Id = entity.Id;
                 return request;
@@ -54,8 +53,7 @@ namespace ContactList.Infra.Service
                 contact.Name = request.Name;
                 contact.Value = request.Value;
 
-                var result = await _context.SaveChangesAsync();
-                if (result == 0) throw new Exception("Error on Contact Update");
+                await _context.SaveChangesAsync();
 
                 request.Id = contact.Id;
 

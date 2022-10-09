@@ -53,8 +53,7 @@ namespace ContactList.Infra.Service
 
                 _context.Persons.Remove(person);
 
-                var result = await _context.SaveChangesAsync();
-                if (result == 0) throw new Exception("Error on Person Delete");
+                await _context.SaveChangesAsync();
 
                 return id;
             }
@@ -162,8 +161,7 @@ namespace ContactList.Infra.Service
                 person.Address = request.Address;
                 person.BirthDate = request.BirthDate;
 
-                var result = await _context.SaveChangesAsync();
-                if (result == 0) throw new Exception("Error on Person Update");
+                await _context.SaveChangesAsync();
 
                 request.Id = person.Id;
 
