@@ -65,18 +65,6 @@ namespace ContactList.Test
 
             Dispose();
         }
-
-        [Fact]
-        public async Task Get_ListByNotExistId_ThrowException()
-        {
-            _service = new PersonService(_context);
-
-            await _service.Invoking(a => _service.GetById(4))
-                .Should()
-                .ThrowExactlyAsync<Exception>();
-
-            Dispose();
-        }
         #endregion
 
         #region Post
