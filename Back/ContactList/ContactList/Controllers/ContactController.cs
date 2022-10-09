@@ -38,7 +38,6 @@ namespace ContactList.Controllers
         {
             try
             {
-                request.Id = id;
                 var contact = await _service.Update(request);
                 if (contact == null) return BadRequest("Error on Contact Update.");
 
