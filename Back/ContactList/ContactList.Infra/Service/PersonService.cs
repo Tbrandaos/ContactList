@@ -81,7 +81,6 @@ namespace ContactList.Infra.Service
             try
             {
                 IQueryable<Person> query = _context.Persons
-                    .Include(a => a.Contacts)
                     .OrderBy(a => a.Id);
 
                 var persons = await query.ToListAsync();
@@ -120,8 +119,7 @@ namespace ContactList.Infra.Service
 
                 var person = await query.FirstOrDefaultAsync();
 
-                if (person == null)
-                    throw new Exception("Person not found for Id: " + id);
+                if (person == null) return new PersonDto();
 
                 var response = new PersonDto()
                 {
@@ -189,12 +187,42 @@ namespace ContactList.Infra.Service
         {
             try
             {
-                var person = await _context.Persons.FirstOrDefaultAsync(a => a.Id == request.Id);
+                var person = await _context.Persons
+                     .Include(a => a.Contacts)
+                    .FirstOrDefaultAsync(a => a.Id == request.Id);
                 if (person == null) throw new Exception("Person not found for Id: " + request.Id);
 
                 person.Name = request.Name;
                 person.Address = request.Address;
                 person.BirthDate = request.BirthDate;
+
+                if (request.Contacts != null)
+                {
+                    foreach (var item in request.Contacts)
+                    {
+                        var existContact = person.Contacts.Where(a => a.Id == item.Id).FirstOrDefault();
+
+                        if(existContact != null)
+                        {
+                            existContact.Name = item.Name;
+                            existContact.Value = item.Value;
+                            existContact.ContactType = item.ContactType;
+                        }
+                        else
+                        {
+                            var contact = new Contact()
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Value = item.Value,
+                                ContactType = item.ContactType,
+                                PersonId = item.PersonId
+                            };
+
+                            person.Contacts.Add(contact);
+                        }
+                    }
+                }
 
                 await _context.SaveChangesAsync();
 

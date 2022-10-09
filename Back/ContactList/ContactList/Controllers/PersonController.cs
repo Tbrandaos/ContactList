@@ -90,7 +90,6 @@ namespace ContactList.Controllers
             try
             {
                 var person = await _service.GetById(id);
-                if (person == null) return NotFound("Person not found for Id: " + id);
 
                 return Ok(person);
             }

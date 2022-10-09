@@ -8,6 +8,7 @@ namespace ContactList.Domain.Models
         public PersonDto()
         {
             Contacts = new List<ContactDto>();
+            BirthDate = DateTime.Now;
         }
 
         public int Id { get; set; }
