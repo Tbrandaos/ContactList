@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import MainAppBar from "../components/MainAppBar";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import NewIcon from "@mui/icons-material/Add";
 import SendIcon from "@mui/icons-material/Send";
 import ContactList, { ContactUiModel } from "../components/ContactList";
 
@@ -57,6 +58,12 @@ const UpsertPerson = (): JSX.Element => {
     );
   }, [params.personId]);
 
+  function addNewContact() {
+    setContacts((prevContacts) => {
+      return [new ContactUiModel(), ...prevContacts]
+    })
+  }
+
   return (
     <>
       <MainAppBar title={person.name} /><Container>
@@ -97,27 +104,28 @@ const UpsertPerson = (): JSX.Element => {
         <Typography mt={5} variant="h4" component="h4">
           Contacts
         </Typography>
+        <Box mt={5} mb={5} sx={{ display: "flex", alignItems: "flex-end" }}>
+
+          <Button variant="contained" endIcon={<NewIcon />} onClick={() => {
+            addNewContact()
+          }}>
+            Add
+          </Button>
+        </Box>
         <ContactList contactList={contacts} onModelChanged={(contactUiModels) => setContacts([...contactUiModels])} />
 
-        <Button variant="contained" endIcon={<ArrowBackIcon />} onClick={() => {
+        <Button style={{marginRight: "12px", marginTop: "16px"}} variant="contained" endIcon={<ArrowBackIcon />} onClick={() => {
           navigate("/");
         }}>
           Back
         </Button>
-        <Button variant="contained" endIcon={<SendIcon />} onClick={async () => {
+        <Button style={{marginTop: "16px"}}  variant="contained" endIcon={<SendIcon />} onClick={async () => {
+          person.contacts = contacts;
           if (person.id === 0) {
             await postPerson(person);
           } else {
             await updatePerson(person);
           }
-          contacts.forEach(async (contact) => {
-            console.log(contact);
-            if (contact.hasBeenSaved()) {
-              await putContactData(contact);
-            } else {
-              await postContactData(contact);
-            }
-          })
           navigate("/");
         }}>
           Send

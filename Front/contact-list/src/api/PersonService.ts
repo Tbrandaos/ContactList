@@ -24,11 +24,15 @@ const postPersonData = (person: Person): Promise<AxiosResponse<Person>> => (
 );
 
 const postContactData = (contact: Contact): Promise<AxiosResponse<Contact>> => (
-    axios.post<Contact>(`https://localhost:7145/api/Contact/${contact.personId}`, contact)
+    axios.post<Contact>('https://localhost:7145/api/Contact/', contact)
 );
 
 const putContactData = (contact: Contact): Promise<AxiosResponse<Contact>> => (
     axios.put<Contact>(`https://localhost:7145/api/Contact/${contact.personId}`, contact)
+);
+
+const deleteContactData = (contactId: number): Promise<AxiosResponse<Contact>> => (
+    axios.delete<Contact>(`https://localhost:7145/api/Contact/${contactId}`)
 );
 
 export { 
@@ -38,5 +42,6 @@ export {
     putPersonData,
     putContactData,
     postContactData,
-    postPersonData
+    postPersonData,
+    deleteContactData
  };

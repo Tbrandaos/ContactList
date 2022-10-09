@@ -63,7 +63,7 @@ const PersonCard = (props: PersonProps): JSX.Element => {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card style={{marginTop: "12px"}} sx={{ minWidth: 275 }}>
       <CardContent>
         <Avatar {...stringAvatar(name)} />
         <Typography variant="h5" component="div">
@@ -77,10 +77,10 @@ const PersonCard = (props: PersonProps): JSX.Element => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deletePerson(id)}>
+        <Button style={{marginRight: "16px"}} variant="outlined" startIcon={<DeleteIcon />} onClick={() => deletePerson(id)}>
           Delete
         </Button>
-        <Link to={`/edit/${id}`}>
+        <Link style={{textDecoration: 'none'}} to={`/edit/${id}`}>
           <Button variant="contained" endIcon={<EditIcon />}>
             Edit
           </Button>
