@@ -1,7 +1,7 @@
 import { Button, Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PersonCard from "../components/PersonCard";
-import { getPersonListData } from "../api/PersonService";
+import { getPersonListData } from "../api/Service";
 import { Person } from "../models/Person";
 import MainAppBar from "../components/MainAppBar";
 import AddIcon from "@mui/icons-material/Add";

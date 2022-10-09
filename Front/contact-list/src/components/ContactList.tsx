@@ -1,6 +1,6 @@
 import { Box, FormControl, InputLabel, Select, MenuItem, TextField, Card, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteContactData } from "../api/PersonService";
+import { deleteContactData } from "../api/Service";
 interface ContactListProps {
   contactList: ContactUiModel[]
   onModelChanged: (contacts: ContactUiModel[]) => void;

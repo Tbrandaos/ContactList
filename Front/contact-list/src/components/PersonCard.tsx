@@ -9,7 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Person } from "../models/Person";
 import { Link } from "react-router-dom";
-import { deletePersonData } from "../api/PersonService";
+import { deletePersonData } from "../api/Service";
 
 export interface PersonProps {
   person: Person;
