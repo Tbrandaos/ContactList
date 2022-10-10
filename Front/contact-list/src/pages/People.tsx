@@ -1,4 +1,4 @@
-import { Button, Container } from "@mui/material";
+import { Container, Fab } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PersonCard from "../components/PersonCard";
 import { getPersonListData } from "../api/Service";
@@ -26,12 +26,13 @@ function People() {
   return (
     <div className="App">
       <MainAppBar title="Contacts" />
-      <Link to={`/edit/${0}`}>
-        <Button variant="contained" endIcon={<AddIcon />}>
-          New
-        </Button>
-      </Link>
       <Container>
+        <Link to={`/edit/${0}`} style={{textDecoration: "none"}}>
+          <Fab style={{marginTop: "12px"}} variant="extended" color="primary" aria-label="add">
+            <AddIcon />
+            New Contact
+          </Fab>
+        </Link>
         {people.map((person) => (
           <PersonCard
             key={person.id}

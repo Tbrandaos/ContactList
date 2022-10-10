@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   TextField,
   Typography,
 } from "@mui/material";
@@ -11,7 +12,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 import { Person } from "../models/Person";
-import { getPersonData, postContactData, postPersonData, putContactData, putPersonData } from "../api/Service";
+import { getPersonData, postPersonData, putPersonData } from "../api/Service";
 import { useParams } from "react-router-dom";
 import MainAppBar from "../components/MainAppBar";
 import { useNavigate } from "react-router-dom";
@@ -101,10 +102,10 @@ const UpsertPerson = (): JSX.Element => {
           </Box>
         </LocalizationProvider>
 
-        <Typography mt={5} variant="h4" component="h4">
-          Contacts
-        </Typography>
-        <Box mt={5} mb={5} sx={{ display: "flex", alignItems: "flex-end" }}>
+        <Box mb={5} sx={{ display: "flex", alignItems: "flex-end" }}>
+          <Typography mt={5} mr={5} variant="h4" component="h4">
+            Contacts
+          </Typography>
 
           <Button variant="contained" endIcon={<NewIcon />} onClick={() => {
             addNewContact()
@@ -113,8 +114,9 @@ const UpsertPerson = (): JSX.Element => {
           </Button>
         </Box>
         <ContactList contactList={contacts} onModelChanged={(contactUiModels) => setContacts([...contactUiModels])} />
+        <Divider style={{marginTop: "12px"}} />
 
-        <Button style={{marginRight: "12px", marginTop: "16px"}} variant="contained" endIcon={<ArrowBackIcon />} onClick={() => {
+        <Button style={{marginRight: "12px", marginTop: "16px"}} variant="contained" startIcon={<ArrowBackIcon />} onClick={() => {
           navigate("/");
         }}>
           Back
